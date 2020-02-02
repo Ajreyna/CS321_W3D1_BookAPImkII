@@ -2,41 +2,49 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CS321_W3D1_BookAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CS321_W3D1_BookAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class BooksController : ControllerBase
     {
-        // GET api/values
-        [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        private readonly IBookService _bookService;
+
+        public BooksController(IBookService bookService)
         {
-            return new string[] { "value1", "value2" };
+            _bookService = bookService;
+            
+        }
+        // GET api/books
+        [HttpGet]
+        public IActionResult Get()
+        {
+            return Ok(_bookService.GetAll());
         }
 
-        // GET api/values/5
+        // GET api/books/5
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
         {
             return "value";
         }
 
-        // POST api/values
+        // POST api/books
         [HttpPost]
         public void Post([FromBody] string value)
         {
         }
 
-        // PUT api/values/5
+        // PUT api/books/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE api/values/5
+        // DELETE api/books/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
